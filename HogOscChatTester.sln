@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HogOscChatTester", "HogOscChatTester.csproj", "{EECEBE96-5AE0-4307-B71B-10F8D789CD2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HogOscChatTester.Desktop", "..\HogOscChatTester.Desktop\HogOscChatTester.Desktop.csproj", "{7542B566-9FAB-4E45-9AF6-4020CF75728F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EECEBE96-5AE0-4307-B71B-10F8D789CD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECEBE96-5AE0-4307-B71B-10F8D789CD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECEBE96-5AE0-4307-B71B-10F8D789CD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECEBE96-5AE0-4307-B71B-10F8D789CD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7542B566-9FAB-4E45-9AF6-4020CF75728F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7542B566-9FAB-4E45-9AF6-4020CF75728F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7542B566-9FAB-4E45-9AF6-4020CF75728F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7542B566-9FAB-4E45-9AF6-4020CF75728F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

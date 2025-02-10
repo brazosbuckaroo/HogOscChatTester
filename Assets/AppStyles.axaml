@@ -1,0 +1,94 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <!-- Add Controls for Previewer Here -->
+    </Border>
+  </Design.PreviewWith>
+
+  <!-- Grid Styles -->
+  <Style Selector="Grid.Default">
+    <Setter Property="Margin"
+            Value="4">
+    </Setter>
+  </Style>
+
+  <!-- Labels Styles -->
+  <Style Selector="Label.Default">
+    <Setter Property="Margin"
+            Value="4">
+    </Setter>
+
+    <Setter Property="FontFamily"
+            Value="Segoe UI">
+    </Setter>
+
+    <Setter Property="FontSize"
+            Value="16">
+    </Setter>
+
+    <Setter Property="VerticalContentAlignment"
+            Value="Center">
+    </Setter>
+  </Style>
+
+  <!-- TextBox Styles -->
+  <Style Selector="TextBox.Default">
+    <Setter Property="Margin"
+            Value="4">
+    </Setter>
+
+    <Setter Property="FontFamily"
+            Value="Segoe UI">
+    </Setter>
+
+    <Setter Property="FontSize"
+            Value="16">
+    </Setter>
+
+    <Setter Property="VerticalContentAlignment"
+            Value="Center">
+    </Setter>
+  </Style>
+
+  <Style Selector="TextBox.NoEdit">
+    <Setter Property="Margin"
+            Value="4">
+    </Setter>
+
+    <Setter Property="FontFamily"
+            Value="Segoe UI">
+    </Setter>
+
+    <Setter Property="FontSize"
+            Value="16">
+    </Setter>
+
+    <Setter Property="IsReadOnly"
+            Value="True">
+    </Setter>
+
+    <Setter Property="VerticalContentAlignment"
+            Value="Center">
+    </Setter>
+    </Style>
+
+    <!-- CheckBox Styles -->
+    <Style Selector="CheckBox.Default">
+      <Setter Property="Margin"
+              Value="4">
+      </Setter>
+
+      <Setter Property="FontFamily"
+              Value="Segoe UI">
+      </Setter>
+
+      <Setter Property="FontSize"
+              Value="16">
+      </Setter>
+
+      <Setter Property="VerticalContentAlignment"
+              Value="Center">
+      </Setter>
+    </Style>
+</Styles>

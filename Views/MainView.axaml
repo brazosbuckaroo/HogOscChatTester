@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:HogOscChatTester.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HogOscChatTester.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <Grid Classes="Default"
+        RowDefinitions="auto, auto, auto, auto"
+        ColumnDefinitions="*, *">
+    <Grid Classes="Default"
+          ColumnDefinitions="*, *"
+          Grid.Row="0"
+          Grid.Column="0">
+      <Label Classes="Default"
+             Grid.Column="0"
+             Content="UDP Port:">
+      </Label>
+
+      <TextBox Classes="Default"
+               Grid.Column="1"
+               Text="{Binding Port}">
+       </TextBox>
+    </Grid>
+
+    <CheckBox Classes="Default"
+              Grid.Row="0"
+              Grid.Column="1"
+              Content="Open Port"
+              IsChecked="{Binding IsPortOpen}"
+              Command="{Binding ChangePortStatus}">
+    </CheckBox>
+
+    <Label Classes="Default"
+           Grid.Row="1"
+           Grid.Column="0"
+           Content="Chat Line 1:">
+    </Label>
+
+    <TextBox Classes="NoEdit"
+             Grid.Row="1"
+             Grid.Column="1"
+             Text="{Binding ChatLineOne}">
+    </TextBox>
+
+    <Label Classes="Default"
+           Grid.Row="2"
+           Grid.Column="0"
+           Content="Chat Line 2:">
+    </Label>
+
+    <TextBox Classes="NoEdit"
+             Grid.Row="2"
+             Grid.Column="1"
+             Text="{Binding ChatLineTwo}">
+    </TextBox>
+
+    <Label Classes="Default"
+           Grid.Row="3"
+           Grid.Column="0"
+           Content="Chat Line 3:">
+    </Label>
+
+    <TextBox Classes="NoEdit"
+             Grid.Row="3"
+             Grid.Column="1"
+             Text="{Binding ChatLineThree}">
+    </TextBox>
+  </Grid>
+</UserControl>
