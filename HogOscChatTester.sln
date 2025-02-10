@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HogOscChatTester", "HogOscChatTester\HogOscChatTester.csproj", "{5D72FA93-63FF-4D3C-BFA3-9EA0CB5BC3F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HogOscChatTester.Desktop", "HogOscChatTester.Desktop\HogOscChatTester.Desktop.csproj", "{AF6AF1EA-8EAD-4894-A42D-C1D19773E692}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D72FA93-63FF-4D3C-BFA3-9EA0CB5BC3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D72FA93-63FF-4D3C-BFA3-9EA0CB5BC3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D72FA93-63FF-4D3C-BFA3-9EA0CB5BC3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D72FA93-63FF-4D3C-BFA3-9EA0CB5BC3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6AF1EA-8EAD-4894-A42D-C1D19773E692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6AF1EA-8EAD-4894-A42D-C1D19773E692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6AF1EA-8EAD-4894-A42D-C1D19773E692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6AF1EA-8EAD-4894-A42D-C1D19773E692}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
