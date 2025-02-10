@@ -1,0 +1,15 @@
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\bin\Release\net8.0\win-x86\HogOscChatTester.deps.json
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\bin\Release\net8.0\win-x86\HogOscChatTester.dll
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\bin\Release\net8.0\win-x86\HogOscChatTester.pdb
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.csproj.AssemblyReference.cache
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\Avalonia\Resources.Inputs.cache
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\Avalonia\resources
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.AssemblyInfoInputs.cache
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.AssemblyInfo.cs
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.csproj.CoreCompileInputs.cache
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\HogOscChatTester.sourcelink.json
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\Avalonia\HogOscChatTester.dll
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\Avalonia\HogOscChatTester.pdb
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\refint\Avalonia\HogOscChatTester.dll
+C:\Users\lough\source\repos\HogOscChatTester\HogOscChatTester\obj\Release\net8.0\win-x86\ref\HogOscChatTester.dll
