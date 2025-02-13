@@ -1,8 +1,5 @@
 ﻿namespace HogOscChatTester;
 
-/// <summary>
-/// 
-/// </summary>
 public partial class App : Application
 {
     /// <summary>
