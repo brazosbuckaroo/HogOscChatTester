@@ -1,38 +1,33 @@
 ﻿namespace HogOscChatTester.ViewModels;
 
 /// <summary>
-/// 
+/// A routable ViewModel that will allow
+/// a <see cref="WindowViewModelBase"/> to create a View
+/// with it's correct ViewModel.
 /// </summary>
 public class RoutableViewModelBase : ReactiveObject, IRoutableViewModel, IValidatableViewModel, IActivatableViewModel
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public IScreen HostScreen
     {
         get;
         protected set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public string? UrlPathSegment
     {
         get;
     } = Guid.NewGuid().ToString().Substring(0, 5);
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public IValidationContext ValidationContext
     {
         get; 
     } = new ValidationContext();
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
+
     public ViewModelActivator Activator
     {
         get; 

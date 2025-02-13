@@ -1,21 +1,19 @@
 ﻿namespace HogOscChatTester.ViewModels;
 
 /// <summary>
-/// 
+/// A simple ViewModel base that allows for
+/// properties to be disposed of and allows for 
+/// validation of user input.
 /// </summary>
 public class ViewModelBase : ReactiveObject, IActivatableViewModel, IValidatableViewModel
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public ViewModelActivator Activator
     {
         get;
     } = new ViewModelActivator();
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public IValidationContext ValidationContext
     {
         get;

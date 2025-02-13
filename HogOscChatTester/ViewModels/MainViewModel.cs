@@ -1,12 +1,14 @@
 ﻿namespace HogOscChatTester.ViewModels;
 
 /// <summary>
-/// 
+/// The ViewModel for the <see cref="MainView"/>. Holds all
+/// the application logic.
 /// </summary>
 public class MainViewModel : RoutableViewModelBase
 {
     /// <summary>
-    /// 
+    /// This is where the ChatLine1 <see cref="OscAddress"/>
+    /// message will be shown to the user.
     /// </summary>
     public string ChatLineOne
     {
@@ -15,7 +17,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// This is where the ChatLine2 <see cref="OscAddress"/>
+    /// message will be shown to the user.
     /// </summary>
     public string ChatLineTwo
     {
@@ -24,7 +27,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// This is where the ChatLine3 <see cref="OscAddress"/>
+    /// message will be shown to the user.
     /// </summary>
     public string ChatLineThree
     {
@@ -33,7 +37,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// This is the backing property for user Port
+    /// inout.
     /// </summary>
     public string? Port
     {
@@ -42,7 +47,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// Used to track whether we have opened the 
+    /// <see cref="UdpClient"/> port.
     /// </summary>
     public bool IsPortOpen
     {
@@ -51,7 +57,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// The <see cref="OscServer"/> used to recieve an
+    /// <see cref="OscMessage"/> using UDP.
     /// </summary>
     public IServer Server
     {
@@ -60,7 +67,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// The <see cref="ReactiveCommand"/> used to signal 
+    /// whether we want to open the port or close it.
     /// </summary>
     public ReactiveCommand<Unit, Unit> ChangePortStatus
     {
@@ -68,7 +76,8 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// 
+    /// Tracks the validity of user input. It will prevent the user
+    /// from opening the port if they provide an invalid number.
     /// </summary>
     public IObservable<IValidationState> PortValidationState
     {
