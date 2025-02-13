@@ -12,3 +12,4 @@ chat to any OSC Server connected to a HogNet network.
 # Libraries and Frameworks used
 - [OscCore](https://github.com/stella3d/OscCore)
 - [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia)
+- [ReactiveUI](https://github.com/AvaloniaUI/Avalonia)
