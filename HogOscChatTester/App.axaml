@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:HogOscChatTester.Models.Types"
              x:Class="HogOscChatTester.App"
              RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. 
@@ -10,4 +11,14 @@
     <StyleInclude Source="/Assets/AppStyles.axaml">
     </StyleInclude>
   </Application.Styles>
+
+  <Application.Resources>
+    <StreamGeometry x:Key="ErrorIconData">
+      M10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2ZM10 12.5C9.58579 12.5 9.25 12.8358 9.25 13.25C9.25 13.6642 9.58579 14 10 14C10.4142 14 10.75 13.6642 10.75 13.25C10.75 12.8358 10.4142 12.5 10 12.5ZM10 6C9.75454 6 9.55039 6.17688 9.50806 6.41012L9.5 6.5V11L9.50806 11.0899C9.55039 11.3231 9.75454 11.5 10 11.5C10.2455 11.5 10.4496 11.3231 10.4919 11.0899L10.5 11V6.5L10.4919 6.41012C10.4496 6.17688 10.2455 6 10 6Z
+    </StreamGeometry>
+
+    <StreamGeometry x:Key="OkayIconData">
+      M24 4C35.0457 4 44 12.9543 44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 12.9543 12.9543 4 24 4ZM32.6339 17.6161C32.1783 17.1605 31.4585 17.1301 30.9676 17.525L30.8661 17.6161L20.75 27.7322L17.1339 24.1161C16.6457 23.628 15.8543 23.628 15.3661 24.1161C14.9105 24.5717 14.8801 25.2915 15.275 25.7824L15.3661 25.8839L19.8661 30.3839C20.3217 30.8395 21.0416 30.8699 21.5324 30.475L21.6339 30.3839L32.6339 19.3839C33.122 18.8957 33.122 18.1043 32.6339 17.6161Z
+    </StreamGeometry>
+  </Application.Resources>
 </Application>

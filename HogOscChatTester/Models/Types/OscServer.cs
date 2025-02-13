@@ -29,15 +29,6 @@ public class OscServer
     /// <summary>
     /// 
     /// </summary>
-    public int Port
-    {
-        get;
-        private set;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public OscDispatcher Dispatcher
     {
         get;
@@ -77,24 +68,6 @@ public class OscServer
     public OscServer()
     {
         this.Address = IPAddress.Any;
-        this.Port = 7001;
-        this.UdpClient = null;
-        this.Dispatcher = new OscDispatcher();
-        this.ServerTask = null;
-        this._serverTaskCancellation = default;
-
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline1"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline2"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline3"));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public OscServer(int port)
-    {
-        this.Address = IPAddress.Any;
-        this.Port = port;
         this.UdpClient = null;
         this.Dispatcher = new OscDispatcher();
         this.ServerTask = null;
@@ -109,12 +82,10 @@ public class OscServer
     /// 
     /// </summary>
     /// <param name="address"></param>
-    /// <param name="port"></param>
     /// <param name="dispatcher"></param>
-    public OscServer(IPAddress address, int port, OscDispatcher dispatcher)
+    public OscServer(IPAddress address, OscDispatcher dispatcher)
     {
         this.Address = address;
-        this.Port = port;
         this.UdpClient = null;
         this.Dispatcher = dispatcher;
         this.ServerTask = null;
@@ -153,10 +124,12 @@ public class OscServer
     /// </summary>
     public void BeginConnection(int port)
     {
-        this.Port = port;
-        this.UdpClient = new UdpClient(this.Port);
+        this.UdpClient = new UdpClient(port);
         this._serverTaskCancellation = CancellationToken.None;
-        this.ServerTask = Task.Run(async () => { await this.ListenTaskAsync(this._serverTaskCancellation); }, this._serverTaskCancellation);
+        this.ServerTask = Task.Run(async () => 
+        { 
+            await this.ListenTaskAsync(this._serverTaskCancellation); 
+        }, this._serverTaskCancellation);
     }
 
     /// <summary>

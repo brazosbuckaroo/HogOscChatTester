@@ -2,17 +2,25 @@
 using Avalonia.ReactiveUI;
 using HogOscChatTester.ViewModels;
 using ReactiveUI;
+using System.Diagnostics;
+using System.Threading;
 
 namespace HogOscChatTester.Views;
 
-public partial class MainWindow : ReactiveWindow<MainViewModel>
+/// <summary>
+/// 
+/// </summary>
+public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public MainWindow()
     {
         this.InitializeComponent();
 
-        this.WhenActivated(disposables => 
-        { 
+        this.WhenActivated(disposable =>
+        {
         });
     }
 }

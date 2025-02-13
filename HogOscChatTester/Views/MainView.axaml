@@ -16,7 +16,7 @@
         RowDefinitions="auto, auto, auto, auto"
         ColumnDefinitions="*, *">
     <Grid Classes="Default"
-          ColumnDefinitions="*, *"
+          ColumnDefinitions="*, *, auto"
           Grid.Row="0"
           Grid.Column="0">
       <Label Classes="Default"
@@ -27,7 +27,16 @@
       <TextBox Classes="Default"
                Grid.Column="1"
                Text="{Binding Port}">
-       </TextBox>
+      </TextBox>
+
+      <PathIcon Grid.Column="2"
+                x:Name="PortValidationIcon"
+                ToolTip.Placement="Pointer">
+        <ToolTip.Tip>
+          <TextBlock x:Name="ValidationTextTip">
+          </TextBlock>
+        </ToolTip.Tip>
+      </PathIcon>
     </Grid>
 
     <CheckBox Classes="Default"
