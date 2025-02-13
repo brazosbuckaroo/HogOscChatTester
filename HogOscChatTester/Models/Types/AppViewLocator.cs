@@ -1,6 +1,8 @@
 ﻿namespace HogOscChatTester.Models.Types;
 
-/// <inheritdoc/>
+/// <summary>
+/// 
+/// </summary>
 public class AppViewLocator : IViewLocator
 {
     /// <inheritdoc/>

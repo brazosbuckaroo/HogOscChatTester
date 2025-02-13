@@ -12,7 +12,7 @@ public class OscServer : Models.Interfaces.IServer
     }
 
     /// <inheritdoc/>
-    public Interfaces.IDispatcher Dispatcher
+    public Models.Interfaces.IDispatcher Dispatcher
     {
         get;
     }

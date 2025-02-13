@@ -8,7 +8,7 @@ public interface IDispatcher
     /// <summary>
     /// 
     /// </summary>
-    public List<OscAddress> Addresses
+    List<OscAddress> Addresses
     {
         get;
     }
