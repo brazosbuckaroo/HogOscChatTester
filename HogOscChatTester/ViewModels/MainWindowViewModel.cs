@@ -27,7 +27,7 @@ public class MainWindowViewModel : WindowViewModelBase
     public MainWindowViewModel()
     {
         this.Server = new OscServer(new OscDispatcher());
-        this.MainViewModel = new MainViewModel(this, this.Server);
+        this.MainViewModel = new MainViewModel();
 
         this.Router.Navigate.Execute(this.MainViewModel);
     }

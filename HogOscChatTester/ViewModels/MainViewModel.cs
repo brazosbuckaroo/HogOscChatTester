@@ -132,36 +132,6 @@ public class MainViewModel : RoutableViewModelBase
     /// <summary>
     /// 
     /// </summary>
-    public MainViewModel(IScreen hostScreen)
-    {
-        this.HostScreen = hostScreen;
-        this.ChangePortStatus = ReactiveCommand.Create(this.ChangePortStatusCommand,
-                                                       this.CanOpenPort());
-        this.ChatLineOne = string.Empty;
-        this._chatLineOne = string.Empty;
-        this.ChatLineTwo = string.Empty;
-        this._chatLineTwo = string.Empty;
-        this.ChatLineThree = string.Empty;
-        this._chatLineThree = string.Empty;
-        this.Port = "7001";
-        this._port = "7001";
-        this.IsPortOpen = false;
-        this._isPortOpen = false;
-        this.Server = new OscServer(new OscDispatcher());
-        this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
-        this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
-                                       .Select(this.IsValidPortNumber);
-
-        this.WhenActivated(disposables =>
-        {
-            this.ValidationRule(thisViewModel => thisViewModel.Port, this.PortValidationState)
-                .DisposeWith(disposables);
-        });
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public MainViewModel(IScreen hostScreen, IServer server)
     {
         this.HostScreen = hostScreen;

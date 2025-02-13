@@ -6,7 +6,7 @@ public partial class App : Application
     /// The OSC Dispatcher service used to help 
     /// "dispatch" OSC addresses to the server.
     /// </summary>
-    private Models.Interfaces.IDispatcher _dispatcher = new OscDispatcher();
+    private readonly Models.Interfaces.IDispatcher _dispatcher = new OscDispatcher();
 
     /// <summary>
     /// The OSC Server used to recieve OSC 

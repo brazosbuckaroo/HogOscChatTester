@@ -6,6 +6,7 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+  <PropertyGroup Label="Avalonia" />
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -30,5 +31,15 @@
     <AvaloniaResource Update="Assets\AppStyles.axaml">
       <SubType>Designer</SubType>
     </AvaloniaResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\MainView.axaml.cs">
+      <DependentUpon>MainView.axaml</DependentUpon>
+    </Compile>
+    
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
