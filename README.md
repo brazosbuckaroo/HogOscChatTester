@@ -2,8 +2,7 @@
 This is a simple test app for the High End Systems control software.
 
 # Purpose
-While it is mostly used to test Chat over OSC feature of Hog, it can be used for the purpose of displaying
-chat to any OSC Server connected to a HogNet network.
+It was made to be used for ensuring the functionality of Hog Chat over OSC.
 
 # Features
 - Multiplatform, it should be able to run on Linux, Windows, and Mac
