@@ -117,7 +117,7 @@ public class MainViewModel : RoutableViewModelBase
         this._port = "7001";
         this.IsPortOpen = false;
         this._isPortOpen = false;
-        this.Server = new OscServer();
+        this.Server = new OscServer(new OscDispatcher());
         this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
         this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
                                        .Select(this.IsValidPortNumber);
@@ -147,7 +147,7 @@ public class MainViewModel : RoutableViewModelBase
         this._port = "7001";
         this.IsPortOpen = false;
         this._isPortOpen = false;
-        this.Server = new OscServer();
+        this.Server = new OscServer(new OscDispatcher());
         this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
         this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
                                        .Select(this.IsValidPortNumber);
