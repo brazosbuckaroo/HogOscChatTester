@@ -1,4 +1,5 @@
-﻿using OscCore.Address;
+﻿using Avalonia.Threading;
+using OscCore.Address;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,11 +12,9 @@ namespace HogOscChatTester.Models.Types;
 /// <summary>
 /// 
 /// </summary>
-public class OscDispatcher
+public class OscDispatcher : Models.Interfaces.IDispatcher
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public List<OscAddress> Addresses
     {
         get; 
@@ -29,20 +28,13 @@ public class OscDispatcher
         this.Addresses = new List<OscAddress>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newAddress"></param>
+    /// <inheritdoc/>
     public void AddAddress(OscAddress newAddress)
     {
         this.Addresses.Add(newAddress);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="inputAddress"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public bool IsExpectedAddress(string inputAddress)
     {
         foreach (OscAddress address in this.Addresses)

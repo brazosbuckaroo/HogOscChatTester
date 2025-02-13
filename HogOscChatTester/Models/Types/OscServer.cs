@@ -10,51 +10,35 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using HogOscChatTester.Models.Interfaces;
 
 namespace HogOscChatTester.Models.Types;
 
 /// <summary>
 /// 
 /// </summary>
-public class OscServer
+public class OscServer : Models.Interfaces.IServer
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public IPAddress Address 
+    /// <inheritdoc/>
+    public IPAddress IpAddress
     {
         get;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public OscDispatcher Dispatcher
+    /// <inheritdoc/>
+    public Interfaces.IDispatcher Dispatcher
     {
         get;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public UdpClient? UdpClient
     {
         get;
         private set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public Task? ServerTask
-    {
-        get; 
-        private set;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public event EventHandler<OscMessageRecievedEventArgs>? OscMessageRecieved;
 
     /// <summary>
@@ -65,20 +49,31 @@ public class OscServer
     /// <summary>
     /// 
     /// </summary>
+    private Task? _serverTask;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public OscServer()
     {
-        this.Address = IPAddress.Any;
+        this.IpAddress = IPAddress.Any;
         this.UdpClient = null;
         this.Dispatcher = new OscDispatcher();
-        this.ServerTask = null;
+        this._serverTask = null;
         this._serverTaskCancellation = default;
+    }
 
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline1"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline2"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline3"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line1"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line2"));
-        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line3"));
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dispatcher"></param>
+    public OscServer(Models.Interfaces.IDispatcher dispatcher)
+    {
+        this.IpAddress = IPAddress.Any;
+        this.UdpClient = null;
+        this.Dispatcher = dispatcher;
+        this._serverTask = null;
+        this._serverTaskCancellation = default;
     }
 
     /// <summary>
@@ -86,19 +81,16 @@ public class OscServer
     /// </summary>
     /// <param name="address"></param>
     /// <param name="dispatcher"></param>
-    public OscServer(IPAddress address, OscDispatcher dispatcher)
+    public OscServer(IPAddress address, Models.Interfaces.IDispatcher dispatcher)
     {
-        this.Address = address;
+        this.IpAddress = address;
         this.UdpClient = null;
         this.Dispatcher = dispatcher;
-        this.ServerTask = null;
+        this._serverTask = null;
         this._serverTaskCancellation = default;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     private async Task ListenTaskAsync(CancellationToken cancellation = default)
     {
         while (this.UdpClient is not null && cancellation == CancellationToken.None)
@@ -122,22 +114,18 @@ public class OscServer
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public void BeginConnection(int port)
     {
         this.UdpClient = new UdpClient(port);
         this._serverTaskCancellation = CancellationToken.None;
-        this.ServerTask = Task.Run(async () => 
+        this._serverTask = Task.Run(async () => 
         { 
             await this.ListenTaskAsync(this._serverTaskCancellation); 
         }, this._serverTaskCancellation);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc/>
     public void EndConnection()
     {
         if (this.UdpClient == null)

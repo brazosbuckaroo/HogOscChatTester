@@ -1,5 +1,6 @@
 ﻿using Avalonia.Media;
 using DynamicData.Binding;
+using HogOscChatTester.Models.Interfaces;
 using HogOscChatTester.Models.Types;
 using OscCore;
 using OscCore.Address;
@@ -25,60 +26,99 @@ namespace HogOscChatTester.ViewModels;
 /// </summary>
 public class MainViewModel : RoutableViewModelBase
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public string ChatLineOne
     {
         get => this._chatLineOne;
         set => this.RaiseAndSetIfChanged(ref this._chatLineOne, value);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string ChatLineTwo
     {
         get => this._chatLineTwo;
         set => this.RaiseAndSetIfChanged(ref this._chatLineTwo, value);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string ChatLineThree
     {
         get => this._chatLineThree;
         set => this.RaiseAndSetIfChanged(ref this._chatLineThree, value);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string? Port
     {
         get => this._port;
         set => this.RaiseAndSetIfChanged(ref this._port, value);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsPortOpen
     {
         get => this._isPortOpen;
         set => this.RaiseAndSetIfChanged(ref this._isPortOpen, value);
     }
 
-    public OscServer Server
+    /// <summary>
+    /// 
+    /// </summary>
+    public IServer Server
     {
         get;
         set;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public ReactiveCommand<Unit, Unit> ChangePortStatus
     {
         get;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public IObservable<IValidationState> PortValidationState
     {
         get;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private string _chatLineOne;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private string _chatLineTwo;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private string _chatLineThree;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private string? _port;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private bool _isPortOpen;
 
     /// <summary>
@@ -129,6 +169,36 @@ public class MainViewModel : RoutableViewModelBase
         this.IsPortOpen = false;
         this._isPortOpen = false;
         this.Server = new OscServer();
+        this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
+        this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
+                                       .Select(this.IsValidPortNumber);
+
+        this.WhenActivated(disposables =>
+        {
+            this.ValidationRule(thisViewModel => thisViewModel.Port, this.PortValidationState)
+                .DisposeWith(disposables);
+        });
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public MainViewModel(IScreen hostScreen, IServer server)
+    {
+        this.HostScreen = hostScreen;
+        this.ChangePortStatus = ReactiveCommand.Create(this.ChangePortStatusCommand,
+                                                       this.CanOpenPort());
+        this.ChatLineOne = string.Empty;
+        this._chatLineOne = string.Empty;
+        this.ChatLineTwo = string.Empty;
+        this._chatLineTwo = string.Empty;
+        this.ChatLineThree = string.Empty;
+        this._chatLineThree = string.Empty;
+        this.Port = "7001";
+        this._port = "7001";
+        this.IsPortOpen = false;
+        this._isPortOpen = false;
+        this.Server = server;
         this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
         this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
                                        .Select(this.IsValidPortNumber);
