@@ -13,15 +13,15 @@ public class ViewModelBase : ReactiveObject, IActivatableViewModel, IValidatable
     /// 
     /// </summary>
     public ViewModelActivator Activator
-    { 
-        get => new ViewModelActivator();
-    }
+    {
+        get;
+    } = new ViewModelActivator();
 
     /// <summary>
     /// 
     /// </summary>
     public IValidationContext ValidationContext
     {
-        get => new ValidationContext();
-    }
+        get;
+    } = new ValidationContext();
 }

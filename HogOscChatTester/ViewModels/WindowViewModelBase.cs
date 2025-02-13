@@ -17,6 +17,6 @@ public class WindowViewModelBase : ReactiveObject, IScreen
     /// </summary>
     public RoutingState Router
     {
-        get => new RoutingState(); 
-    }
+        get;
+    } = new RoutingState();
 }

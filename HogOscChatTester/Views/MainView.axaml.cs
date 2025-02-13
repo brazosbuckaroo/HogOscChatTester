@@ -63,6 +63,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         App.Current.TryGetResource("OkayIconData", out pathIconGeometry);
 
         this.PortValidationIcon.Data = (Geometry?)pathIconGeometry;
+        this.ValidationTextTip.Text = "Valid Port.";
 
         this.PortValidationIcon.Classes.Set("NoError", true);
     }

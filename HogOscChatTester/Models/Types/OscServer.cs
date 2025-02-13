@@ -76,6 +76,9 @@ public class OscServer
         this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline1"));
         this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline2"));
         this.Dispatcher.AddAddress(new OscAddress("/hog/status/chatline3"));
+        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line1"));
+        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line2"));
+        this.Dispatcher.AddAddress(new OscAddress("/hog/status/chat/line3"));
     }
 
     /// <summary>

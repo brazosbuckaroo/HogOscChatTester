@@ -66,7 +66,7 @@ public class MainViewModel : RoutableViewModelBase
         get;
     }
 
-    public IObservable<ValidationState> PortValidationState
+    public IObservable<IValidationState> PortValidationState
     {
         get;
     }
@@ -144,7 +144,7 @@ public class MainViewModel : RoutableViewModelBase
     /// 
     /// </summary>
     /// <returns></returns>
-    private ValidationState IsValidPortNumber(string? portNumber)
+    private IValidationState IsValidPortNumber(string? portNumber)
     {
         if (!int.TryParse(portNumber, out int parsedValue) || portNumber == null)
         {
@@ -155,9 +155,9 @@ public class MainViewModel : RoutableViewModelBase
             return new ValidationState(false, "Port must be a number greater than 0");
         }
 
-        return new ValidationState(true, "Valid Port");
+        return ValidationState.Valid;
     }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -180,15 +180,18 @@ public class MainViewModel : RoutableViewModelBase
         {
             return;
         }
-        if (this.Server.Dispatcher.Addresses[0].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[0].Match(e.Message.Address)
+            || this.Server.Dispatcher.Addresses[3].Match(e.Message.Address))
         {
             this.ChatLineOne = e.Message[0].ToString()!;
         }
-        if (this.Server.Dispatcher.Addresses[1].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[1].Match(e.Message.Address)
+            || this.Server.Dispatcher.Addresses[4].Match(e.Message.Address))
         {
             this.ChatLineTwo = e.Message[0].ToString()!;
         }
-        if (this.Server.Dispatcher.Addresses[2].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[2].Match(e.Message.Address)
+            || this.Server.Dispatcher.Addresses[5].Match(e.Message.Address))
         {
             this.ChatLineThree = e.Message[0].ToString()!;
         }
@@ -200,14 +203,16 @@ public class MainViewModel : RoutableViewModelBase
     /// <returns></returns>
     private void ChangePortStatusCommand()
     {
+        if (!int.TryParse(this.Port, out int portNumber))
+        {
+            throw new InvalidOperationException("An invalid port number was given to the server.");
+        }
         if (!this.IsPortOpen)
         {
             this.Server.EndConnection();
         }
         else
         {
-            int.TryParse(this.Port, out int portNumber);
-
             this.Server.BeginConnection(portNumber);
         }
     }

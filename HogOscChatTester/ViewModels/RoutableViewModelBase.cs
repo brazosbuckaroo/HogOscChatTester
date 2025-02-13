@@ -17,18 +17,18 @@ public class RoutableViewModelBase : ReactiveObject, IRoutableViewModel, IValida
         protected set;
     }
 
-    public string UrlPathSegment
-    { 
-        get => Guid.NewGuid().ToString();
-    }
+    public string? UrlPathSegment
+    {
+        get;
+    } = Guid.NewGuid().ToString().Substring(0, 5);
 
     public IValidationContext ValidationContext
     {
-        get => new ValidationContext();
-    }
+        get; 
+    } = new ValidationContext();
 
     public ViewModelActivator Activator
     {
-        get => new ViewModelActivator();
-    }
+        get; 
+    } = new ViewModelActivator();
 }
