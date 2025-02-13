@@ -1,12 +1,13 @@
 ﻿namespace HogOscChatTester.Views;
 
 /// <summary>
-/// 
+/// The MainView class. Controls any UI changes.
 /// </summary>
 public partial class MainView : ReactiveUserControl<MainViewModel>
 {
     /// <summary>
-    /// 
+    /// Default constructor that will bind <see cref="MainViewModel"/>
+    /// validation context to output and listen to <see cref="MainViewModel.PortValidationState"/>.
     /// </summary>
     public MainView()
     {
@@ -22,9 +23,12 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     }
 
     /// <summary>
-    /// 
+    /// A method that checks the <see cref="MainViewModel.Port"/> 
+    /// validity and changes the UI respective of the outcome.
     /// </summary>
-    /// <param name="canOpenPort"></param>
+    /// <param name="canOpenPort">
+    /// The current state of <see cref="MainViewModel.PortValidationState"/>.
+    /// </param>
     private void UpdatePathIcon(IValidationState? canOpenPort)
     {
         object? pathIconGeometry = null;

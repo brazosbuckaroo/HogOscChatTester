@@ -3,12 +3,14 @@
 public partial class App : Application
 {
     /// <summary>
-    /// 
+    /// The OSC Dispatcher service used to help 
+    /// "dispatch" OSC addresses to the server.
     /// </summary>
     private Models.Interfaces.IDispatcher? _dispatcher;
 
     /// <summary>
-    /// 
+    /// The OSC Server used to recieve OSC 
+    /// messages from a Client.
     /// </summary>
     private IServer? _server;
 
@@ -24,6 +26,7 @@ public partial class App : Application
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline1"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline2"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline3"));
+        // related to a Hog defect. will remove once it's fixed.
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line1"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line2"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line3"));
@@ -34,7 +37,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new MainWindowViewModel(this._server)
             };
         }
 
