@@ -9,6 +9,6 @@ It was made to be used for ensuring the functionality of Hog Chat over OSC.
 - A simple UI
 
 # Libraries and Frameworks used
-- [OscCore](https://github.com/stella3d/OscCore)
+- [OscCore](https://github.com/tilde-love/osc-core)
 - [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia)
 - [ReactiveUI](https://github.com/AvaloniaUI/Avalonia)
