@@ -1,11 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.ReactiveUI;
-using HogOscChatTester.ViewModels;
-using ReactiveUI;
-using System.Diagnostics;
-using System.Threading;
-
-namespace HogOscChatTester.Views;
+﻿namespace HogOscChatTester.Views;
 
 /// <summary>
 /// 

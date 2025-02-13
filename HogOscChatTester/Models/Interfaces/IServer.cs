@@ -1,14 +1,4 @@
-﻿using HogOscChatTester.Models.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace HogOscChatTester.Models.Interfaces;
+﻿namespace HogOscChatTester.Models.Interfaces;
 
 /// <summary>
 /// 
@@ -34,7 +24,7 @@ public interface IServer
     /// <summary>
     /// 
     /// </summary>
-    Interfaces.IDispatcher Dispatcher
+    Models.Interfaces.IDispatcher Dispatcher
     {
         get;
     }

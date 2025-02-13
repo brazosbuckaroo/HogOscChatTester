@@ -1,25 +1,4 @@
-﻿using Avalonia.Media;
-using DynamicData.Binding;
-using HogOscChatTester.Models.Interfaces;
-using HogOscChatTester.Models.Types;
-using OscCore;
-using OscCore.Address;
-using OscCore.LowLevel;
-using ReactiveUI;
-using ReactiveUI.Validation.Contexts;
-using ReactiveUI.Validation.Extensions;
-using ReactiveUI.Validation.States;
-using System;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HogOscChatTester.ViewModels;
+﻿namespace HogOscChatTester.ViewModels;
 
 /// <summary>
 /// 

@@ -1,15 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Media;
-using Avalonia.ReactiveUI;
-using HogOscChatTester.ViewModels;
-using ReactiveUI;
-using ReactiveUI.Validation.Extensions;
-using ReactiveUI.Validation.States;
-using System;
-using System.Diagnostics;
-using System.Reactive.Disposables;
-
-namespace HogOscChatTester.Views;
+﻿namespace HogOscChatTester.Views;
 
 /// <summary>
 /// 

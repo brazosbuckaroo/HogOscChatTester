@@ -1,14 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
-using HogOscChatTester.Models.Types;
-using HogOscChatTester.Models.Interfaces;
-using HogOscChatTester.ViewModels;
-using HogOscChatTester.Views;
-using OscCore.Address;
-
-namespace HogOscChatTester;
+﻿namespace HogOscChatTester;
 
 /// <summary>
 /// 

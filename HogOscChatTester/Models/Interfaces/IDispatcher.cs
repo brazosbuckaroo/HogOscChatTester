@@ -1,11 +1,4 @@
-﻿using OscCore.Address;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HogOscChatTester.Models.Interfaces;
+﻿namespace HogOscChatTester.Models.Interfaces;
 
 /// <summary>
 /// 

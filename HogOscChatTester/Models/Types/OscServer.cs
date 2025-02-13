@@ -1,18 +1,4 @@
-﻿using Avalonia.Rendering;
-using OscCore;
-using OscCore.Address;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using HogOscChatTester.Models.Interfaces;
-
-namespace HogOscChatTester.Models.Types;
+﻿namespace HogOscChatTester.Models.Types;
 
 /// <summary>
 /// 

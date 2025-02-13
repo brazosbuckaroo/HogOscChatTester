@@ -1,8 +1,4 @@
-﻿using ReactiveUI;
-using ReactiveUI.Validation.Abstractions;
-using ReactiveUI.Validation.Contexts;
-
-namespace HogOscChatTester.ViewModels;
+﻿namespace HogOscChatTester.ViewModels;
 
 /// <summary>
 /// 
