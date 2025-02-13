@@ -33,7 +33,8 @@
                 x:Name="PortValidationIcon"
                 ToolTip.Placement="Pointer">
         <ToolTip.Tip>
-          <TextBlock x:Name="ValidationTextTip">
+          <TextBlock Classes="Default"
+                     x:Name="ValidationTextTip">
           </TextBlock>
         </ToolTip.Tip>
       </PathIcon>
