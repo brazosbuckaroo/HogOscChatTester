@@ -27,7 +27,6 @@ public class RoutableViewModelBase : ReactiveObject, IRoutableViewModel, IValida
     } = new ValidationContext();
 
     /// <inheritdoc/>
-
     public ViewModelActivator Activator
     {
         get; 

@@ -1,12 +1,14 @@
 ﻿namespace HogOscChatTester.Models.Interfaces;
 
 /// <summary>
-/// 
+/// The interface used for the basis of the
+/// <see cref="OscServer"/>.
 /// </summary>
 public interface IServer
 {
     /// <summary>
-    /// 
+    /// The <see cref="UdpClient"/> used to open the
+    /// UDP port.
     /// </summary>
     UdpClient? UdpClient
     {
@@ -14,7 +16,7 @@ public interface IServer
     }
 
     /// <summary>
-    /// 
+    /// The IP address of the host machine.
     /// </summary>
     IPAddress IpAddress
     {
@@ -22,7 +24,8 @@ public interface IServer
     }
 
     /// <summary>
-    /// 
+    /// The dispatcher used to filter, or dispatch, 
+    /// <see cref="OscMessage"/> for this server.
     /// </summary>
     Models.Interfaces.IDispatcher Dispatcher
     {
@@ -30,14 +33,20 @@ public interface IServer
     }
 
     /// <summary>
-    /// 
+    /// The eventhandler used to signal when 
+    /// an <see cref="OscMessage"/> has been recieved.
     /// </summary>
     event EventHandler<OscMessageRecievedEventArgs>? OscMessageRecieved;
 
     /// <summary>
-    /// 
+    /// The method used to open the UDP port so we 
+    /// can listen for <see cref="OscMessage"/>
+    /// being sent.
     /// </summary>
-    /// <param name="port"></param>
+    /// <param name="port">
+    /// The UDP port number to open so we
+    /// can listen for an <see cref="OscMessage"/>.
+    /// </param>
     void BeginConnection(int port);
 
     /// <summary>

@@ -12,7 +12,8 @@ public class OscDispatcher : Models.Interfaces.IDispatcher
     }
 
     /// <summary>
-    /// 
+    /// A simple constructor used to initialize the 
+    /// list of addresses.
     /// </summary>
     public OscDispatcher() 
     { 

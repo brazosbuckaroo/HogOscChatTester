@@ -1,7 +1,8 @@
 ﻿namespace HogOscChatTester.Models.Types;
 
 /// <summary>
-/// 
+/// A simple class used to help assign Views
+/// to their respective ViewModels.
 /// </summary>
 public class AppViewLocator : IViewLocator
 {
