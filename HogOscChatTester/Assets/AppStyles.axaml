@@ -161,4 +161,19 @@
             Value="4">
     </Setter>
   </Style>
+
+  <!-- Border Styles -->
+  <Style Selector="Border.Default">
+    <Setter Property="BorderBrush"
+            Value="White">
+    </Setter>
+
+    <Setter Property="BorderThickness"
+            Value="1">
+    </Setter>
+
+    <Setter Property="Margin"
+            Value="4">
+    </Setter>
+  </Style>
 </Styles>

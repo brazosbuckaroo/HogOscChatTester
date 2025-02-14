@@ -70,11 +70,13 @@
            Content="Chat Line 1:">
     </Label>
 
-    <TextBox Classes="NoEdit"
-             Grid.Row="1"
-             Grid.Column="1"
-             Text="{Binding ChatLineOne}">
-    </TextBox>
+    <Border Classes="Default"
+            Grid.Row="1"
+            Grid.Column="1">
+      <TextBlock Classes="Default"
+                 Text="{Binding ChatLineOne}">
+      </TextBlock>
+    </Border>
 
     <Label Classes="Default"
            Grid.Row="2"
@@ -82,11 +84,13 @@
            Content="Chat Line 2:">
     </Label>
 
-    <TextBox Classes="NoEdit"
-             Grid.Row="2"
-             Grid.Column="1"
-             Text="{Binding ChatLineTwo}">
-    </TextBox>
+    <Border Classes="Default"
+            Grid.Row="2"
+            Grid.Column="1">
+      <TextBlock Classes="Default"
+                 Text="{Binding ChatLineTwo}">
+      </TextBlock>
+    </Border>
 
     <Label Classes="Default"
            Grid.Row="3"
@@ -94,10 +98,12 @@
            Content="Chat Line 3:">
     </Label>
 
-    <TextBox Classes="NoEdit"
-             Grid.Row="3"
-             Grid.Column="1"
-             Text="{Binding ChatLineThree}">
-    </TextBox>
+    <Border Classes="Default"
+            Grid.Row="3"
+            Grid.Column="1">
+      <TextBlock Classes="Default"
+                 Text="{Binding ChatLineThree}">
+      </TextBlock>
+    </Border>
   </Grid>
 </UserControl>
