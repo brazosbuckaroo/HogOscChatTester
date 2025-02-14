@@ -1,10 +1,14 @@
-﻿namespace HogOscChatTester.Models.Types;
+﻿using Avalonia.Input;
+using System.Diagnostics.SymbolStore;
+using System.Threading.Tasks;
+
+namespace HogOscChatTester.Models.Types;
 
 /// <summary>
 /// A simple <see cref="OscServer"/> used to recieve 
 /// <see cref="OscMessage"/>.
 /// </summary>
-public class OscServer : Models.Interfaces.IServer
+public class OscServer : Models.Interfaces.IServer, IDisposable
 {
     /// <inheritdoc/>
     public IPAddress IpAddress
@@ -35,10 +39,20 @@ public class OscServer : Models.Interfaces.IServer
     private CancellationToken _serverTaskCancellation;
 
     /// <summary>
+    /// 
+    /// </summary>
+    private CancellationTokenSource? _cancellationTokenSource;
+
+    /// <summary>
     /// The task used to control and communicate what the 
     /// listening thread should do. (i.e. cancelling, etc)
     /// </summary>
     private Task? _serverTask;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool _isDisposed;
 
     /// <summary>
     /// A default constructor that will allow the server
@@ -50,7 +64,9 @@ public class OscServer : Models.Interfaces.IServer
         this.UdpClient = null;
         this.Dispatcher = new OscDispatcher();
         this._serverTask = null;
+        this._cancellationTokenSource = null;
         this._serverTaskCancellation = default;
+        this._isDisposed = false;
     }
 
     /// <summary>
@@ -67,7 +83,9 @@ public class OscServer : Models.Interfaces.IServer
         this.UdpClient = null;
         this.Dispatcher = dispatcher;
         this._serverTask = null;
+        this._cancellationTokenSource = null;
         this._serverTaskCancellation = default;
+        this._isDisposed = false;
     }
 
     /// <summary>
@@ -87,7 +105,9 @@ public class OscServer : Models.Interfaces.IServer
         this.UdpClient = null;
         this.Dispatcher = dispatcher;
         this._serverTask = null;
+        this._cancellationTokenSource = null;
         this._serverTaskCancellation = default;
+        this._isDisposed = false;
     }
 
     /// <summary>
@@ -101,23 +121,16 @@ public class OscServer : Models.Interfaces.IServer
     /// </returns>
     private async Task ListenTaskAsync(CancellationToken cancellation = default)
     {
-        while (this.UdpClient is not null && cancellation == CancellationToken.None)
+        while (this.UdpClient != null && !cancellation.IsCancellationRequested)
         {
-            try
-            {
-                UdpReceiveResult datagram = await this.UdpClient.ReceiveAsync(cancellation);
-                OscMessage message = OscMessage.Read(datagram.Buffer, 0, datagram.Buffer.Length);
+            UdpReceiveResult datagram = await this.UdpClient.ReceiveAsync(cancellation);
+            OscMessage message = OscMessage.Read(datagram.Buffer, 0, datagram.Buffer.Length);
 
-                if (this.Dispatcher.IsExpectedAddress(message.Address))
-                {
-                    OscMessageRecievedEventArgs args = new OscMessageRecievedEventArgs(message);
-
-                    this.OnOscMessageRecieved(args);
-                }
-            }
-            catch (SocketException)
+            if (this.Dispatcher.IsExpectedAddress(message.Address))
             {
-                break;
+                OscMessageRecievedEventArgs args = new OscMessageRecievedEventArgs(message);
+
+                this.OnOscMessageRecieved(args);
             }
         }
     }
@@ -126,7 +139,8 @@ public class OscServer : Models.Interfaces.IServer
     public void BeginConnection(int port)
     {
         this.UdpClient = new UdpClient(port);
-        this._serverTaskCancellation = CancellationToken.None;
+        this._cancellationTokenSource = new CancellationTokenSource();
+        this._serverTaskCancellation = this._cancellationTokenSource.Token;
         this._serverTask = Task.Run(async () => 
         { 
             await this.ListenTaskAsync(this._serverTaskCancellation); 
@@ -134,21 +148,69 @@ public class OscServer : Models.Interfaces.IServer
     }
 
     /// <inheritdoc/>
-    public void EndConnection()
+    public async Task EndConnection(CancellationToken cancellation = default)
     {
-        if (this.UdpClient == null)
+        if (this.UdpClient == null 
+            || this._serverTask == null
+            || this._cancellationTokenSource == null)
         {
             return;
         }
 
-        var tokenSource = new CancellationTokenSource();
-        this._serverTaskCancellation = tokenSource.Token;
+        try
+        {
+            await this._cancellationTokenSource.CancelAsync();
+            this._serverTask.Wait(CancellationToken.None);
+        }
+        catch (AggregateException)
+        {
+            if (this._serverTask.IsCanceled || this._serverTask.IsFaulted)
+            {
+                this.UdpClient.Close();
+                this._serverTask.Dispose();
+                this._cancellationTokenSource.Dispose();
 
-        tokenSource.Cancel();
-        this.UdpClient.Close();
-        tokenSource.Dispose();
+                this.UdpClient = null;
+                this._serverTask = null;
+                this._cancellationTokenSource = null;
+            }
+        }
+    }
 
-        this.UdpClient = null;
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// The implentation of disposing for this class.
+    /// </summary>
+    /// <param name="disposing">
+    /// Determine if we want to actuall fully dispose of 
+    /// the <see cref="OscServer"/>.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (this._isDisposed)
+        {
+            return;
+        }
+        if (disposing)
+        {
+            if (this._serverTask != null)
+            {
+                // since we have to wait for 
+                // the server to be shutdown before we dispose
+                Task.Run(async () =>
+                {
+                    await this.EndConnection();
+                }).Wait();
+            }
+        }
+
+        this._isDisposed = true;
     }
 
     /// <summary>

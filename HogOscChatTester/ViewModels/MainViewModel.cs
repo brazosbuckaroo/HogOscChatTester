@@ -119,8 +119,8 @@ public class MainViewModel : RoutableViewModelBase
     /// </summary>
     public MainViewModel()
     {
-        this.ChangePortStatus = ReactiveCommand.Create(this.ChangePortStatusCommand,
-                                                       this.CanOpenPort());
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask(this.ChangePortStatusCommand,
+                                                               this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
@@ -140,6 +140,7 @@ public class MainViewModel : RoutableViewModelBase
         {
             this.ValidationRule(thisViewModel => thisViewModel.Port, this.PortValidationState)
                 .DisposeWith(disposables);
+            this.Server.DisposeWith(disposables);
         });
     }
 
@@ -158,8 +159,8 @@ public class MainViewModel : RoutableViewModelBase
     public MainViewModel(IScreen hostScreen, IServer server)
     {
         this.HostScreen = hostScreen;
-        this.ChangePortStatus = ReactiveCommand.Create(this.ChangePortStatusCommand,
-                                                       this.CanOpenPort());
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask(this.ChangePortStatusCommand,
+                                                               this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
@@ -179,6 +180,7 @@ public class MainViewModel : RoutableViewModelBase
         {
             this.ValidationRule(thisViewModel => thisViewModel.Port, this.PortValidationState)
                 .DisposeWith(disposables);
+            this.Server.DisposeWith(disposables);
         });
     }
 
@@ -226,7 +228,7 @@ public class MainViewModel : RoutableViewModelBase
     /// The actual funationality of the <see cref="MainViewModel.ChangePortStatus"/>
     /// command.
     /// </summary>
-    private void ChangePortStatusCommand()
+    private async Task ChangePortStatusCommand()
     {
         // we should never get here; hence, the reason I want to crash
         // if we manage to get here, then we have bigger issues :P
@@ -236,7 +238,7 @@ public class MainViewModel : RoutableViewModelBase
         }
         if (!this.IsPortOpen)
         {
-            this.Server.EndConnection();
+            await this.Server.EndConnection();
         }
         else
         {

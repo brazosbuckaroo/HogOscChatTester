@@ -4,7 +4,7 @@
 /// The interface used for the basis of the
 /// <see cref="OscServer"/>.
 /// </summary>
-public interface IServer
+public interface IServer : IDisposable
 {
     /// <summary>
     /// The <see cref="UdpClient"/> used to open the
@@ -50,7 +50,14 @@ public interface IServer
     void BeginConnection(int port);
 
     /// <summary>
-    /// 
+    /// The method that will end the connection and stop reading 
+    /// <see cref="OscMessage"/>.
     /// </summary>
-    void EndConnection();
+    /// <param name="cancellation">
+    /// A cancellation token to be passed down if needed.
+    /// </param>
+    /// <returns>
+    /// Returns a task that can be awaited.
+    /// </returns>
+    Task EndConnection(CancellationToken cancellation = default);
 }
