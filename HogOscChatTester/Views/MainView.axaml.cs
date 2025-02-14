@@ -19,6 +19,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
                 .DisposeWith(disposables);
             this.ViewModel!.PortValidationState.Subscribe(this.UpdatePathIcon)
                 .DisposeWith(disposables);
+            this.ViewModel!.ChangePortStatus.Subscribe(this.DisableIpAndPortInput)
+                .DisposeWith(disposables);
         });
     }
 
@@ -59,5 +61,26 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         this.ValidationTextTip.Text = "Valid Port.";
 
         this.PortValidationIcon.Classes.Set("NoError", true);
+    }
+
+    /// <summary>
+    /// A method that allows user input field to be disabled/enabled
+    /// based on if <see cref="OscServer"/> is running.
+    /// </summary>
+    /// <param name="isServerRunning">
+    /// The signal from the ViewModel to detemine when to disable user input.
+    /// </param>
+    private void DisableIpAndPortInput(bool isServerRunning)
+    {
+        if (isServerRunning)
+        {
+            this.IpAddressSelector.IsEnabled = false;
+            this.PortNumberInput.IsEnabled = false;
+        }
+        else
+        {
+            this.IpAddressSelector.IsEnabled = true;
+            this.PortNumberInput.IsEnabled = true;
+        }
     }
 }

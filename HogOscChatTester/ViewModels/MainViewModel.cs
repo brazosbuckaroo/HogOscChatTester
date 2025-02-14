@@ -67,19 +67,37 @@ public class MainViewModel : RoutableViewModelBase
     }
 
     /// <summary>
-    /// The <see cref="ReactiveCommand"/> used to signal 
-    /// whether we want to open the port or close it.
+    /// Tracks the validity of user input. It will prevent the user
+    /// from opening the port if they provide an invalid number.
     /// </summary>
-    public ReactiveCommand<Unit, Unit> ChangePortStatus
+    public IObservable<IValidationState> PortValidationState
     {
         get;
     }
 
     /// <summary>
-    /// Tracks the validity of user input. It will prevent the user
-    /// from opening the port if they provide an invalid number.
+    /// The list of IP addresses on the device.
     /// </summary>
-    public IObservable<IValidationState> PortValidationState
+    public ObservableCollection<string> HostDeivceIpAddress
+    {
+        get => this._hostDeviceIpAddress;
+        set => this.RaiseAndSetIfChanged(ref this._hostDeviceIpAddress, value);
+    }
+
+    /// <summary>
+    /// The user selected IpV4 address to use when starting the server.
+    /// </summary>
+    public string SelectIpAddress
+    {
+        get => this._selectedIpAddress;
+        set => this.RaiseAndSetIfChanged(ref this._selectedIpAddress, value);
+    }
+
+    /// <summary>
+    /// The <see cref="ReactiveCommand"/> used to signal 
+    /// whether we want to open the port or close it.
+    /// </summary>
+    public ReactiveCommand<Unit, bool> ChangePortStatus
     {
         get;
     }
@@ -115,18 +133,34 @@ public class MainViewModel : RoutableViewModelBase
     private bool _isPortOpen;
 
     /// <summary>
+    /// The backing field for the list of IPAddresses on the 
+    /// host device.
+    /// </summary>
+    private ObservableCollection<string> _hostDeviceIpAddress;
+
+    /// <summary>
+    /// The IPV4 address selected by the user to open the 
+    /// UDP port.
+    /// </summary>
+    private string _selectedIpAddress;
+
+    /// <summary>
     /// Once again, this is only for the Avalonia XML Previwer.
     /// </summary>
     public MainViewModel()
     {
-        this.ChangePortStatus = ReactiveCommand.CreateFromTask(this.ChangePortStatusCommand,
-                                                               this.CanOpenPort());
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
+                                                                     this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
         this._chatLineTwo = string.Empty;
         this.ChatLineThree = string.Empty;
         this._chatLineThree = string.Empty;
+        this.HostDeivceIpAddress = this.GetListOfIpAddresses();
+        this._hostDeviceIpAddress = this.GetListOfIpAddresses();
+        this.SelectIpAddress = string.Empty;
+        this._selectedIpAddress = string.Empty;
         this.Port = "7001";
         this._port = "7001";
         this.IsPortOpen = false;
@@ -159,14 +193,18 @@ public class MainViewModel : RoutableViewModelBase
     public MainViewModel(IScreen hostScreen, IServer server)
     {
         this.HostScreen = hostScreen;
-        this.ChangePortStatus = ReactiveCommand.CreateFromTask(this.ChangePortStatusCommand,
-                                                               this.CanOpenPort());
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
+                                                                     this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
         this._chatLineTwo = string.Empty;
         this.ChatLineThree = string.Empty;
         this._chatLineThree = string.Empty;
+        this.HostDeivceIpAddress = this.GetListOfIpAddresses();
+        this._hostDeviceIpAddress = this.GetListOfIpAddresses();
+        this.SelectIpAddress = string.Empty;
+        this._selectedIpAddress = string.Empty;
         this.Port = "7001";
         this._port = "7001";
         this.IsPortOpen = false;
@@ -221,14 +259,19 @@ public class MainViewModel : RoutableViewModelBase
     private IObservable<bool> CanOpenPort()
     {
         return this.WhenAnyValue(thisViewModel => thisViewModel.Port,
-                                 port => this.IsValidPortNumber(port).IsValid);
+                                 thisViewModel => thisViewModel.SelectIpAddress,
+                                 (port, selectedIpAddress) => this.IsValidPortNumber(port).IsValid 
+                                                              && !string.IsNullOrEmpty(selectedIpAddress));
     }
 
     /// <summary>
     /// The actual funationality of the <see cref="MainViewModel.ChangePortStatus"/>
     /// command.
     /// </summary>
-    private async Task ChangePortStatusCommand()
+    /// <returns>
+    /// Returns a bool to signal when to disable and enable user input.
+    /// </returns>
+    private async Task<bool> ChangePortStatusCommand()
     {
         // we should never get here; hence, the reason I want to crash
         // if we manage to get here, then we have bigger issues :P
@@ -239,11 +282,40 @@ public class MainViewModel : RoutableViewModelBase
         if (!this.IsPortOpen)
         {
             await this.Server.EndConnection();
+
+            return false;
         }
         else
         {
-            this.Server.BeginConnection(portNumber);
+            this.Server.BeginConnection(this.SelectIpAddress, portNumber);
+
+            return true;
         }
+    }
+
+    /// <summary>
+    /// Get a list of IPV4 address on the local
+    /// machine.
+    /// </summary>
+    /// <returns>
+    /// Returns a list in the form of an <see cref="ObservableCollection"/>.
+    /// </returns>
+    private ObservableCollection<string> GetListOfIpAddresses()
+    {
+        ObservableCollection<string> listOfAddress = new ObservableCollection<string>();
+        IPHostEntry ipAddresses = Dns.GetHostEntry(Dns.GetHostName());
+        
+        // TODO: Make this async perhaps?!?!?
+        foreach (IPAddress address in ipAddresses.AddressList)
+        {
+            // check for IPV4 addresses only
+            if (address.AddressFamily == AddressFamily.InterNetwork)
+            {
+                listOfAddress.Add(address.ToString());
+            }
+        }
+
+        return listOfAddress;
     }
 
     /// <summary>

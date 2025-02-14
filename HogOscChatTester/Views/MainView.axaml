@@ -16,37 +16,53 @@
         RowDefinitions="auto, auto, auto, auto"
         ColumnDefinitions="*, *">
     <Grid Classes="Default"
-          ColumnDefinitions="*, *, auto"
+          ColumnDefinitions="*, auto, *, auto, *"
           Grid.Row="0"
-          Grid.Column="0">
+          Grid.ColumnSpan="2">
       <Label Classes="Default"
              Grid.Column="0"
+             Content="Address:">
+      </Label>
+
+      <ComboBox Classes="Default"
+                x:Name="IpAddressSelector"
+                Grid.Column="1"
+                ItemsSource="{Binding HostDeivceIpAddress}"
+                SelectedItem="{Binding SelectIpAddress}"
+                Width="200">
+      </ComboBox>
+
+      <Label Classes="Default"
+             Grid.Column="2"
              Content="UDP Port:">
       </Label>
 
-      <TextBox Classes="Default"
-               Grid.Column="1"
-               Text="{Binding Port}">
-      </TextBox>
+      <StackPanel Classes="Horizontal"
+                  Grid.Column="3">
+        <TextBox Classes="Default"
+                 x:Name="PortNumberInput"
+                 Text="{Binding Port}"
+                 Width="200">
+        </TextBox>
 
-      <PathIcon Grid.Column="2"
-                x:Name="PortValidationIcon"
-                ToolTip.Placement="Pointer">
-        <ToolTip.Tip>
-          <TextBlock Classes="Default"
-                     x:Name="ValidationTextTip">
-          </TextBlock>
-        </ToolTip.Tip>
-      </PathIcon>
+        <PathIcon x:Name="PortValidationIcon"
+                  ToolTip.Placement="Pointer">
+          <ToolTip.Tip>
+            <TextBlock Classes="Default"
+                       x:Name="ValidationTextTip">
+            </TextBlock>
+          </ToolTip.Tip>
+        </PathIcon>
+      </StackPanel>
+
+      <CheckBox Classes="Default"
+                Grid.Column="4"
+                Content="Open Port"
+                IsChecked="{Binding IsPortOpen}"
+                Command="{Binding ChangePortStatus}">
+      </CheckBox>
     </Grid>
 
-    <CheckBox Classes="Default"
-              Grid.Row="0"
-              Grid.Column="1"
-              Content="Open Port"
-              IsChecked="{Binding IsPortOpen}"
-              Command="{Binding ChangePortStatus}">
-    </CheckBox>
 
     <Label Classes="Default"
            Grid.Row="1"

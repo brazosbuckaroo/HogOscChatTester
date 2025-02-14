@@ -11,12 +11,6 @@ namespace HogOscChatTester.Models.Types;
 public class OscServer : Models.Interfaces.IServer, IDisposable
 {
     /// <inheritdoc/>
-    public IPAddress IpAddress
-    {
-        get;
-    }
-
-    /// <inheritdoc/>
     public Models.Interfaces.IDispatcher Dispatcher
     {
         get;
@@ -60,7 +54,6 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
     /// </summary>
     public OscServer()
     {
-        this.IpAddress = IPAddress.Any;
         this.UdpClient = null;
         this.Dispatcher = new OscDispatcher();
         this._serverTask = null;
@@ -79,29 +72,6 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
     /// </param>
     public OscServer(Models.Interfaces.IDispatcher dispatcher)
     {
-        this.IpAddress = IPAddress.Any;
-        this.UdpClient = null;
-        this.Dispatcher = dispatcher;
-        this._serverTask = null;
-        this._cancellationTokenSource = null;
-        this._serverTaskCancellation = default;
-        this._isDisposed = false;
-    }
-
-    /// <summary>
-    /// The constructor that allows a specific <see cref="IPAddress"/>
-    /// to be used as an endpoint with dispatching.
-    /// </summary>
-    /// <param name="address">
-    /// The network deivces Ip address.
-    /// </param>
-    /// <param name="dispatcher">
-    /// The dispatcher that'll allow <see cref="OscMessage"/> to be 
-    /// filtered.
-    /// </param>
-    public OscServer(IPAddress address, Models.Interfaces.IDispatcher dispatcher)
-    {
-        this.IpAddress = address;
         this.UdpClient = null;
         this.Dispatcher = dispatcher;
         this._serverTask = null;
@@ -136,9 +106,10 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
     }
 
     /// <inheritdoc/>
-    public void BeginConnection(int port)
+    public void BeginConnection(string ipAddress, int port)
     {
-        this.UdpClient = new UdpClient(port);
+        IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
+        this.UdpClient = new UdpClient(localEndPoint);
         this._cancellationTokenSource = new CancellationTokenSource();
         this._serverTaskCancellation = this._cancellationTokenSource.Token;
         this._serverTask = Task.Run(async () => 

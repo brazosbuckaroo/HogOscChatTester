@@ -16,14 +16,6 @@ public interface IServer : IDisposable
     }
 
     /// <summary>
-    /// The IP address of the host machine.
-    /// </summary>
-    IPAddress IpAddress
-    {
-        get;
-    }
-
-    /// <summary>
     /// The dispatcher used to filter, or dispatch, 
     /// <see cref="OscMessage"/> for this server.
     /// </summary>
@@ -43,11 +35,14 @@ public interface IServer : IDisposable
     /// can listen for <see cref="OscMessage"/>
     /// being sent.
     /// </summary>
+    /// <param name="ipAddress">
+    /// The IpAddress to open the port on.
+    /// </param>
     /// <param name="port">
     /// The UDP port number to open so we
     /// can listen for an <see cref="OscMessage"/>.
     /// </param>
-    void BeginConnection(int port);
+    void BeginConnection(string ipAddress, int port);
 
     /// <summary>
     /// The method that will end the connection and stop reading 
