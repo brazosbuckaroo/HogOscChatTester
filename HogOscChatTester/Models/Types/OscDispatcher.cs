@@ -1,7 +1,8 @@
 ﻿namespace HogOscChatTester.Models.Types;
 
 /// <summary>
-/// 
+/// A simple OSC Dipsatcher used for filtering incoming
+/// <see cref="OscMessage"/>s.
 /// </summary>
 public class OscDispatcher : Models.Interfaces.IDispatcher
 {
