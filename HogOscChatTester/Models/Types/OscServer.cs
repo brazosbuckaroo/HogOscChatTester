@@ -100,7 +100,7 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
             {
                 OscMessageRecievedEventArgs args = new OscMessageRecievedEventArgs(message);
 
-                this.OnOscMessageRecieved(args);
+                this.OscMessage_OnOscMessageRecieved(args);
             }
         }
     }
@@ -192,7 +192,7 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
     /// The event argument used to give the <see cref="OscMessage"/>
     /// to the caller.
     /// </param>
-    protected virtual void OnOscMessageRecieved(OscMessageRecievedEventArgs e)
+    protected virtual void OscMessage_OnOscMessageRecieved(OscMessageRecievedEventArgs e)
     {
         this.OscMessageRecieved?.Invoke(this, e);
     }
