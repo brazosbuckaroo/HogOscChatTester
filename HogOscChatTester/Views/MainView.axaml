@@ -19,7 +19,7 @@
           ColumnDefinitions="*, auto, *, auto, *"
           Grid.Row="0"
           Grid.ColumnSpan="2">
-      <Label Classes="Default"
+      <Label Classes="ContentRightAligned"
              Grid.Column="0"
              Content="Address:">
       </Label>
@@ -32,7 +32,7 @@
                 Width="200">
       </ComboBox>
 
-      <Label Classes="Default"
+      <Label Classes="ContentRightAligned"
              Grid.Column="2"
              Content="UDP Port:">
       </Label>
