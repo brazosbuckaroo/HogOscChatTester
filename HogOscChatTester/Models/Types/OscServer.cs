@@ -91,7 +91,7 @@ public class OscServer : Models.Interfaces.IServer, IDisposable
     /// </returns>
     private async Task ListenTaskAsync(CancellationToken cancellation = default)
     {
-        while (this.UdpClient != null && !cancellation.IsCancellationRequested)
+        while (this.UdpClient != null)
         {
             UdpReceiveResult datagram = await this.UdpClient.ReceiveAsync(cancellation);
             OscMessage message = OscMessage.Read(datagram.Buffer, 0, datagram.Buffer.Length);
