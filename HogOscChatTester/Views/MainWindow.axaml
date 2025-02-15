@@ -18,9 +18,11 @@
     <vm:MainWindowViewModel />
   </Design.DataContext>
 
-  <rxui:RoutedViewHost Router="{Binding Router}">
-    <rxui:RoutedViewHost.ViewLocator>
-      <types:AppViewLocator></types:AppViewLocator>
-    </rxui:RoutedViewHost.ViewLocator>
-  </rxui:RoutedViewHost>
+  <ScrollViewer >
+    <rxui:RoutedViewHost Router="{Binding Router}">
+      <rxui:RoutedViewHost.ViewLocator>
+        <types:AppViewLocator></types:AppViewLocator>
+      </rxui:RoutedViewHost.ViewLocator>
+    </rxui:RoutedViewHost>
+  </ScrollViewer>
 </Window>
