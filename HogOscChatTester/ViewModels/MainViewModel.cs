@@ -78,16 +78,16 @@ public class MainViewModel : RoutableViewModelBase
     /// <summary>
     /// The list of IP addresses on the device.
     /// </summary>
-    public ObservableCollection<string> HostDeivceIpAddress
+    public ObservableCollection<string> HostDeivceIpAddresses
     {
-        get => this._hostDeviceIpAddress;
-        set => this.RaiseAndSetIfChanged(ref this._hostDeviceIpAddress, value);
+        get => this._hostDeviceIpAddresses;
+        set => this.RaiseAndSetIfChanged(ref this._hostDeviceIpAddresses, value);
     }
 
     /// <summary>
     /// The user selected IpV4 address to use when starting the server.
     /// </summary>
-    public string SelectIpAddress
+    public string SelectedIpAddress
     {
         get => this._selectedIpAddress;
         set => this.RaiseAndSetIfChanged(ref this._selectedIpAddress, value);
@@ -136,7 +136,7 @@ public class MainViewModel : RoutableViewModelBase
     /// The backing field for the list of IPAddresses on the 
     /// host device.
     /// </summary>
-    private ObservableCollection<string> _hostDeviceIpAddress;
+    private ObservableCollection<string> _hostDeviceIpAddresses;
 
     /// <summary>
     /// The IPV4 address selected by the user to open the 
@@ -145,21 +145,26 @@ public class MainViewModel : RoutableViewModelBase
     private string _selectedIpAddress;
 
     /// <summary>
+    /// A <see cref="IPHostEntry"/> classes to help
+    /// us query the host machine for available addresses.
+    /// </summary>
+    private IPHostEntry _host;
+
+    /// <summary>
     /// Once again, this is only for the Avalonia XML Previwer.
     /// </summary>
     public MainViewModel()
     {
-        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
-                                                                     this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
         this._chatLineTwo = string.Empty;
         this.ChatLineThree = string.Empty;
         this._chatLineThree = string.Empty;
-        this.HostDeivceIpAddress = this.GetListOfIpAddresses();
-        this._hostDeviceIpAddress = this.GetListOfIpAddresses();
-        this.SelectIpAddress = string.Empty;
+        this._host = Dns.GetHostEntry(Dns.GetHostName());
+        this.HostDeivceIpAddresses = this.GetListOfIpAddresses();
+        this._hostDeviceIpAddresses = this.GetListOfIpAddresses();
+        this.SelectedIpAddress = string.Empty;
         this._selectedIpAddress = string.Empty;
         this.Port = "7001";
         this._port = "7001";
@@ -169,6 +174,9 @@ public class MainViewModel : RoutableViewModelBase
         this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
         this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
                                        .Select(this.IsValidPortNumber);
+        NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
+                                                                     this.CanOpenPort());
 
         this.WhenActivated(disposables =>
         {
@@ -193,17 +201,16 @@ public class MainViewModel : RoutableViewModelBase
     public MainViewModel(IScreen hostScreen, IServer server)
     {
         this.HostScreen = hostScreen;
-        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
-                                                                     this.CanOpenPort());
         this.ChatLineOne = string.Empty;
         this._chatLineOne = string.Empty;
         this.ChatLineTwo = string.Empty;
         this._chatLineTwo = string.Empty;
         this.ChatLineThree = string.Empty;
         this._chatLineThree = string.Empty;
-        this.HostDeivceIpAddress = this.GetListOfIpAddresses();
-        this._hostDeviceIpAddress = this.GetListOfIpAddresses();
-        this.SelectIpAddress = string.Empty;
+        this._host = Dns.GetHostEntry(Dns.GetHostName());
+        this.HostDeivceIpAddresses = this.GetListOfIpAddresses();
+        this._hostDeviceIpAddresses = this.GetListOfIpAddresses();
+        this.SelectedIpAddress = string.Empty;
         this._selectedIpAddress = string.Empty;
         this.Port = "7001";
         this._port = "7001";
@@ -213,6 +220,9 @@ public class MainViewModel : RoutableViewModelBase
         this.Server.OscMessageRecieved += this.Server_OscMessageRecieved!;
         this.PortValidationState = this.WhenValueChanged(thisViewModel => thisViewModel.Port)
                                        .Select(this.IsValidPortNumber);
+        NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+        this.ChangePortStatus = ReactiveCommand.CreateFromTask<bool>(this.ChangePortStatusCommand,
+                                                                     this.CanOpenPort());
 
         this.WhenActivated(disposables =>
         {
@@ -234,9 +244,9 @@ public class MainViewModel : RoutableViewModelBase
     /// inform the UI if the user provided a valid port
     /// number.
     /// </returns>
-    private IValidationState IsValidPortNumber(string? portNumber)
+    private IValidationState IsValidPortNumber(string? inputPortNumber)
     {
-        if (!int.TryParse(portNumber, out int parsedValue) || portNumber == null)
+        if (!int.TryParse(inputPortNumber, out int parsedValue) || inputPortNumber == null)
         {
             return new ValidationState(false, "Port must be a number");
         }
@@ -244,8 +254,38 @@ public class MainViewModel : RoutableViewModelBase
         {
             return new ValidationState(false, "Port must be a number greater than 0");
         }
-
+        
         return ValidationState.Valid;
+    }
+
+    /// <summary>
+    /// A helper function to check if the provided IPV4 address
+    /// is valid before letting it be used to open the port.
+    /// </summary>
+    /// <param name="inputIpAddress">
+    /// An IPAddress provided as a string.
+    /// </param>
+    /// <returns>
+    /// Returns a <see cref="IValidationState"/> that can be
+    /// valid or not based on the Ip Address given.
+    /// </returns>
+    private IValidationState IsAvailableIpAddress(string? inputIpAddress)
+    {
+        if (inputIpAddress == null || !IPAddress.TryParse(inputIpAddress, out _))
+        {
+            return new ValidationState(false, "Not a valid Ip Address.");
+        }
+
+        foreach (IPAddress ipAddress in this._host.AddressList)
+        {
+            // check to make sure we still have this ip address
+            if (ipAddress.ToString() == inputIpAddress)
+            {
+                return ValidationState.Valid;
+            }
+        }
+
+        return new ValidationState(false, "Not an available Ip Address.");
     }
 
     /// <summary>
@@ -259,9 +299,10 @@ public class MainViewModel : RoutableViewModelBase
     private IObservable<bool> CanOpenPort()
     {
         return this.WhenAnyValue(thisViewModel => thisViewModel.Port,
-                                 thisViewModel => thisViewModel.SelectIpAddress,
+                                 thisViewModel => thisViewModel.SelectedIpAddress,
                                  (port, selectedIpAddress) => this.IsValidPortNumber(port).IsValid 
-                                                              && !string.IsNullOrEmpty(selectedIpAddress));
+                                                              && !string.IsNullOrEmpty(selectedIpAddress)
+                                                              && this.IsAvailableIpAddress(selectedIpAddress).IsValid);
     }
 
     /// <summary>
@@ -287,7 +328,7 @@ public class MainViewModel : RoutableViewModelBase
         }
         else
         {
-            this.Server.BeginConnection(this.SelectIpAddress, portNumber);
+            this.Server.BeginConnection(this.SelectedIpAddress, portNumber);
 
             return true;
         }
@@ -303,10 +344,9 @@ public class MainViewModel : RoutableViewModelBase
     private ObservableCollection<string> GetListOfIpAddresses()
     {
         ObservableCollection<string> listOfAddress = new ObservableCollection<string>();
-        IPHostEntry ipAddresses = Dns.GetHostEntry(Dns.GetHostName());
-        
+
         // TODO: Make this async perhaps?!?!?
-        foreach (IPAddress address in ipAddresses.AddressList)
+        foreach (IPAddress address in this._host.AddressList)
         {
             // check for IPV4 addresses only
             if (address.AddressFamily == AddressFamily.InterNetwork)
@@ -350,5 +390,24 @@ public class MainViewModel : RoutableViewModelBase
         {
             this.ChatLineThree = e.Message[0].ToString()!;
         }
+    }
+
+    /// <summary>
+    /// An event handler used to listen to any Network Adapter
+    /// changes on the system.
+    /// </summary>
+    /// <param name="sender">
+    /// The <see cref="NetworkChange"/> that sends the message we have new
+    /// ip addresses
+    /// </param>
+    /// <param name="e">
+    /// For this event handler this can be safely ignored.
+    /// </param>
+    private void NetworkChange_NetworkAddressChanged(object? sender, EventArgs e)
+    {
+        // refresh list
+        this._host = Dns.GetHostEntry(Dns.GetHostName());
+        // refresh UI
+        this.HostDeivceIpAddresses = this.GetListOfIpAddresses();
     }
 }

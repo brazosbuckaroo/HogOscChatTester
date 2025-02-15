@@ -27,8 +27,8 @@
       <ComboBox Classes="Default"
                 x:Name="IpAddressSelector"
                 Grid.Column="1"
-                ItemsSource="{Binding HostDeivceIpAddress}"
-                SelectedItem="{Binding SelectIpAddress}"
+                ItemsSource="{Binding HostDeivceIpAddresses}"
+                SelectedItem="{Binding SelectedIpAddress}"
                 Width="200">
       </ComboBox>
 
