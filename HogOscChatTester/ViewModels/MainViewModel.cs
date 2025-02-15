@@ -403,8 +403,18 @@ public class MainViewModel : RoutableViewModelBase
     /// <param name="e">
     /// For this event handler this can be safely ignored.
     /// </param>
-    private void NetworkChange_NetworkAddressChanged(object? sender, EventArgs e)
+    private async void NetworkChange_NetworkAddressChanged(object? sender, EventArgs e)
     {
+        // check to see if the port is opened
+        // when the network address changes
+        // then, well close it. 
+        if (this.IsPortOpen)
+        {
+            this.IsPortOpen = false;
+
+            await this.ChangePortStatus.Execute();
+        }
+
         // refresh list
         this._host = Dns.GetHostEntry(Dns.GetHostName());
         // refresh UI
