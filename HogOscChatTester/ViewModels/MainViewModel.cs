@@ -283,7 +283,7 @@ public class MainViewModel : RoutableViewModelBase
         foreach (IPAddress ipAddress in this._host.AddressList)
         {
             // check to make sure we still have this ip address
-            if (ipAddress.Equals(parsedAddress))
+            if (parsedAddress.Equals(ipAddress))
             {
                 return ValidationState.Valid;
             }
