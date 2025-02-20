@@ -271,15 +271,19 @@ public class MainViewModel : RoutableViewModelBase
     /// </returns>
     private IValidationState IsAvailableIpAddress(string? inputIpAddress)
     {
-        if (inputIpAddress == null || !IPAddress.TryParse(inputIpAddress, out _))
+        if (inputIpAddress == null || !IPAddress.TryParse(inputIpAddress, out IPAddress? parsedAddress))
         {
             return new ValidationState(false, "Not a valid Ip Address.");
+        }
+        if (parsedAddress == null)
+        {
+            return new ValidationState(false, "Could not parse inputIpAddress");
         }
 
         foreach (IPAddress ipAddress in this._host.AddressList)
         {
             // check to make sure we still have this ip address
-            if (ipAddress.ToString() == inputIpAddress)
+            if (ipAddress.Equals(parsedAddress))
             {
                 return ValidationState.Valid;
             }
