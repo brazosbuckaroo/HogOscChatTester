@@ -324,17 +324,17 @@ public class MainViewModel : RoutableViewModelBase
         {
             throw new InvalidOperationException("An invalid port number was given to the server.");
         }
-        if (!this.IsPortOpen)
-        {
-            await this.Server.EndConnection();
-
-            return false;
-        }
-        else
+        if (this.IsPortOpen)
         {
             this.Server.BeginConnection(this.SelectedIpAddress, portNumber);
 
             return true;
+        }
+        else
+        {
+            await this.Server.EndConnection();
+
+            return false;
         }
     }
 
