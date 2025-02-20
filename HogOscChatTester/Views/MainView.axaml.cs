@@ -51,16 +51,18 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
 
             this.PortValidationIcon.Data = (StreamGeometry?)pathIconGeometry;
             this.PortValidationIcon.Classes.Set("Error", true);
-            
+
             return;
         }
+        else
+        {
+            App.Current.TryGetResource("OkayIconData", out pathIconGeometry);
 
-        App.Current.TryGetResource("OkayIconData", out pathIconGeometry);
+            this.PortValidationIcon.Data = (StreamGeometry?)pathIconGeometry;
+            this.ValidationTextTip.Text = "Valid Port.";
 
-        this.PortValidationIcon.Data = (Geometry?)pathIconGeometry;
-        this.ValidationTextTip.Text = "Valid Port.";
-
-        this.PortValidationIcon.Classes.Set("NoError", true);
+            this.PortValidationIcon.Classes.Set("NoError", true);
+        }
     }
 
     /// <summary>

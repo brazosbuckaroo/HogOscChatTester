@@ -24,10 +24,6 @@ public partial class App : Application
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline1"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline2"));
         this._dispatcher.AddAddress(new OscAddress("/hog/status/chatline3"));
-        // related to a Hog defect. will remove once it's fixed.
-        this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line1"));
-        this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line2"));
-        this._dispatcher.AddAddress(new OscAddress("/hog/status/chat/line3"));
 
         this._server = new OscServer(this._dispatcher);
 

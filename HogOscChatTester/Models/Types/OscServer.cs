@@ -1,8 +1,4 @@
-﻿using Avalonia.Input;
-using System.Diagnostics.SymbolStore;
-using System.Threading.Tasks;
-
-namespace HogOscChatTester.Models.Types;
+﻿namespace HogOscChatTester.Models.Types;
 
 /// <summary>
 /// A simple <see cref="OscServer"/> used to recieve 

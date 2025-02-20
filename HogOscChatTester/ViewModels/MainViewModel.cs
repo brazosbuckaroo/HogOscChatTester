@@ -375,18 +375,15 @@ public class MainViewModel : RoutableViewModelBase
         {
             return;
         }
-        if (this.Server.Dispatcher.Addresses[0].Match(e.Message.Address)
-            || this.Server.Dispatcher.Addresses[3].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[0].Match(e.Message.Address))
         {
             this.ChatLineOne = e.Message[0].ToString()!;
         }
-        if (this.Server.Dispatcher.Addresses[1].Match(e.Message.Address)
-            || this.Server.Dispatcher.Addresses[4].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[1].Match(e.Message.Address))
         {
             this.ChatLineTwo = e.Message[0].ToString()!;
         }
-        if (this.Server.Dispatcher.Addresses[2].Match(e.Message.Address)
-            || this.Server.Dispatcher.Addresses[5].Match(e.Message.Address))
+        if (this.Server.Dispatcher.Addresses[2].Match(e.Message.Address))
         {
             this.ChatLineThree = e.Message[0].ToString()!;
         }
